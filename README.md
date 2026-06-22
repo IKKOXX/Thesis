@@ -1,9 +1,9 @@
 # IEEE OAJPE
 
 ## 最新版ダウンロード
-[![Build Thesis PDF](https://github.com/HashiReo/IEEE_OAJPE_Template/actions/workflows/build_pdf.yml/badge.svg)](https://github.com/HashiReo/IEEE_OAJPE_Template/actions/workflows/build_pdf.yml)
+[![Build Thesis PDF](https://github.com/IKKOXX/Thesis/actions/workflows/build_pdf.yml/badge.svg)](https://github.com/IKKOXX/Thesis/actions/workflows/build_pdf.yml)
 
-[📥 最新のPDFをダウンロード (main.pdf)](https://github.com/HashiReo/IEEE_OAJPE_Template/releases/download/latest/main.pdf)
+[📥 最新のPDFをダウンロード (main.pdf)](https://github.com/IKKOXX/Thesis/releases/download/latest/main.pdf)
 
 ## 概要
 概要があれば概要を記入してください。
