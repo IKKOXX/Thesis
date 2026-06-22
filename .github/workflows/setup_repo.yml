@@ -1,0 +1,60 @@
+# GitHubのREADME内の最新pdfダウンロード欄に反映するリンクを
+# 使用者の GitHubアカウント名/リポジトリ名 に書き換えるワークフロー
+# 1. use this template でリポジトリを新規作成(これが見えてる時点で実行済み)
+# 2. vscode で clone devcontainerで開く(これが見えてる時点で実行済み)
+# 3. mainブランチにコミット＆プッシュすると自動実行される
+
+name: Setup Repository
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  update-readme:
+    # テンプレート元のリポジトリ(HashiReo/IEEE_OAJPE_Template)では実行しない
+    if: github.repository != 'HashiReo/IEEE_OAJPE_Template'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Replace repository name in README
+        run: |
+          # 置換対象の文字列（元のテンプレートのリポジトリ名）
+          OLD_REPO="HashiReo/IEEE_OAJPE_Template"
+          # 新しいリポジトリ名（自動取得）
+          NEW_REPO="${{ github.repository }}"
+          
+          echo "Checking for $OLD_REPO in README.md..."
+
+          # README内に元のリポジトリ名があるか確認
+          if grep -q "$OLD_REPO" README.md; then
+            echo "Replacing $OLD_REPO with $NEW_REPO..."
+            
+            # 一括置換を実行
+            sed -i "s|$OLD_REPO|$NEW_REPO|g" README.md
+            
+            # Gitの設定
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            
+            # 変更をコミット＆プッシュ
+            git add README.md
+            git commit -m "Docs: Update README links to match new repository"
+            git push
+            echo "README updated successfully."
+          else
+            echo "No replacement needed or already updated."
+          fi
+
+      - name: Remove setup workflow
+        # README更新が終わったら、このワークフローファイル自体を削除する
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/setup_repo.yml
+          git commit -m "Chore: Remove setup workflow"
+          git push

@@ -1,0 +1,36 @@
+{
+	"name": "IEEE PES LaTeX Environment",
+	// Dockerfileの場所を指定
+	"build": {"dockerfile": "Dockerfile"},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"james-yu.latex-workshop",
+				"mhutchie.git-graph"
+			],
+			"settings": {
+				"latex-workshop.latex.autoClean.run": "onBuilt",
+				"latex-workshop.latex.recipes": [
+					{
+						"name": "latexmk (auto)",
+						"tools": [
+							"latexmk"
+						]
+					}
+				],
+				"latex-workshop.latex.tools": [
+					{
+						"name": "latexmk",
+						"command": "latexmk",
+						"args": [
+							"-interaction=nonstopmode",
+							"-file-line-error",
+							"%DOC%"
+						],
+						"env": {}
+					}
+				]
+			}
+		}
+	}
+}
